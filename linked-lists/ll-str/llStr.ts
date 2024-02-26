@@ -79,11 +79,21 @@ class LLStr {
 
   pop(): string {
 
+    if(this.length === 0) throw new IndexError;
+
+    let current = this.head;
     const lastNode = this.tail;
 
+    while(current !== null){
+      if(current.next == lastNode){
+        current.next = null;
+        this.tail = current;
+      }
+      current = current.next
+    }
 
     this.length -= 1;
-    return "x";
+    return lastNode!.val;
   }
 
   /** shift(): return & remove first item.
@@ -92,6 +102,14 @@ class LLStr {
    **/
 
   shift(): string {
+
+    if(this.length === 0) throw new IndexError;
+
+    // let current = this.head;
+    const currFirstNode = this.head;
+    const newHeadNode = currFirstNode!.next;
+    this.head = newHeadNode;
+    newHeadNode!.next = currFirstNode;
 
     this.length -= 1;
     return "x";
@@ -130,6 +148,8 @@ class LLStr {
    **/
 
   removeAt(idx: number): string {
+
+
 
     this.length -= 1;
     return "x";
