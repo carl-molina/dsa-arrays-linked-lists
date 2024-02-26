@@ -21,7 +21,7 @@ class NodeStr {
 }
 
 /**
- * Linked list of numbers.
+ * Linked list of strings.
  */
 
 class LLStr {
@@ -40,11 +40,36 @@ class LLStr {
   /** push(val): add new value to end of list. */
 
   push(val: string): void {
+
+    const newNode = new NodeStr(val);
+
+    if (this.head === null) {
+      this.head = newNode;
+    }
+
+    if (this.tail !== null) {
+      this.tail.next = newNode;
+    }
+
+    this.length += 1;
+    this.tail = newNode;
   }
 
   /** unshift(val): add new value to start of list. */
 
   unshift(val: string): void {
+
+    const newNode = new NodeStr(val);
+
+    if (this.head === null) {
+      this.head = newNode;
+      this.tail = newNode;
+    } else {
+      newNode.next = this.head;
+      this.head = newNode;
+    }
+
+    this.length += 1;
   }
 
   /** pop(): return & remove last item.
@@ -53,6 +78,11 @@ class LLStr {
    **/
 
   pop(): string {
+
+    const lastNode = this.tail;
+
+
+    this.length -= 1;
     return "x";
   }
 
@@ -62,6 +92,8 @@ class LLStr {
    **/
 
   shift(): string {
+
+    this.length -= 1;
     return "x";
   }
 
@@ -88,6 +120,8 @@ class LLStr {
    **/
 
   insertAt(idx: number, val: string): void {
+
+    this.length += 1;
   }
 
   /** removeAt(idx): return & remove item at idx,
@@ -96,6 +130,8 @@ class LLStr {
    **/
 
   removeAt(idx: number): string {
+
+    this.length -= 1;
     return "x";
   }
 
