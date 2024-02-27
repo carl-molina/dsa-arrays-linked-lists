@@ -79,13 +79,13 @@ class LLStr {
 
   pop(): string {
 
-    if(this.length === 0) throw new IndexError;
+    if (this.length === 0) throw new IndexError;
 
     let current = this.head;
     const lastNode = this.tail;
 
-    while(current !== null){
-      if(current.next === lastNode){
+    while (current !== null) {
+      if (current.next === lastNode) {
         current.next = null;
         this.tail = current;
         console.log('this.length:', this.length);
@@ -96,7 +96,7 @@ class LLStr {
         this.head = null;
         this.tail = null;
       }
-      current = current.next
+      current = current.next;
     }
 
     return lastNode!.val;
@@ -109,16 +109,16 @@ class LLStr {
 
   shift(): string {
 
-    if(this.length === 0) throw new IndexError;
+    if (this.length === 0) throw new IndexError;
 
     //[a, b]
     const currFirstNode = this.head; //cfn=a //b
     const newHeadNode = currFirstNode!.next; //nhn = b //null
-    if(newHeadNode === null){
+    if (newHeadNode === null) {
       this.head = null;
       this.tail = null;
 
-    }else{
+    } else {
       this.head = newHeadNode; //head=b
       newHeadNode!.next = currFirstNode!.next!.next;
 
@@ -135,7 +135,7 @@ class LLStr {
 
   getAt(idx: number): string {
 
-    if(this.length === 0) throw new IndexError;
+    if (this.length === 0) throw new IndexError;
 
     let startingIdx = 0;
     let current = this.head;
@@ -159,7 +159,7 @@ class LLStr {
 
   setAt(idx: number, val: string): void {
 
-    if(this.length === 0) throw new IndexError;
+    if (this.length === 0) throw new IndexError;
 
     let startingIdx = 0;
     let current = this.head;
@@ -184,23 +184,26 @@ class LLStr {
   insertAt(idx: number, val: string): void {
     //[a, 1, b]
 
-    if(idx > this.length || idx < 0){
+    console.log('Top of insertAt method');
+
+    if (idx > this.length || idx < 0) {
       throw new IndexError;
     }
 
-    if(idx === 0){
+    if (idx === 0) {
       this.unshift(val);
-    }else if(idx === this.length-1){
+    } else if (idx === this.length) {
       this.push(val);
-    }else{
-
+    } else {
       let startingIdx = 0;
       let current = this.head; //a //b
 
       while (current !== null) {
 
-        if ((startingIdx+1) === idx) { //1
+        console.log('Inside while loop');
+        if ((startingIdx + 1) === idx) { //1
 
+          console.log('Inside startingIdx+1 === idx');
           const newNode = new NodeStr(val);
           newNode.next = current.next!; //newNode.next = b
           current.next = newNode; //a -> 1
@@ -215,6 +218,7 @@ class LLStr {
     }
 
 
+
   }
 
   /** removeAt(idx): return & remove item at idx,
@@ -224,14 +228,14 @@ class LLStr {
 
   removeAt(idx: number): string {
 
-    if(this.length === 0) throw new IndexError;
+    if (this.length === 0) throw new IndexError;
 
     let startingIdx = 0;
     let current = this.head;
 
     while (current !== null) {
 
-      if ((startingIdx+1) === idx) {
+      if ((startingIdx + 1) === idx) {
 
         const soughtNode = current.next;
 
