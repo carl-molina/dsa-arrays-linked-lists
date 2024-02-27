@@ -85,14 +85,20 @@ class LLStr {
     const lastNode = this.tail;
 
     while(current !== null){
-      if(current.next == lastNode){
+      if(current.next === lastNode){
         current.next = null;
         this.tail = current;
+        console.log('this.length:', this.length);
+        this.length -= 1;
+        console.log('this.length after minus 1:', this.length);
+      } else if (current.next === null) {
+        this.length -= 1;
+        this.head = null;
+        this.tail = null;
       }
       current = current.next
     }
 
-    this.length -= 1;
     return lastNode!.val;
   }
 
@@ -112,7 +118,7 @@ class LLStr {
     newHeadNode!.next = currFirstNode;
 
     this.length -= 1;
-    return "x";
+    return currFirstNode!.val;
   }
 
   /** getAt(idx): get val at idx.
@@ -121,7 +127,22 @@ class LLStr {
    **/
 
   getAt(idx: number): string {
-    return "x";
+
+    if(this.length === 0) throw new IndexError;
+
+    let startingIdx = 0;
+    let current = this.head;
+
+    while (current !== null) {
+      if (startingIdx === idx) {
+        return current.val;
+      }
+      current = current.next;
+      startingIdx += 1;
+    }
+
+    throw new IndexError;
+
   }
 
   /** setAt(idx, val): set val at idx to val.
@@ -130,6 +151,22 @@ class LLStr {
    **/
 
   setAt(idx: number, val: string): void {
+
+    if(this.length === 0) throw new IndexError;
+
+    let startingIdx = 0;
+    let current = this.head;
+
+    while (current !== null) {
+      if (startingIdx === idx) {
+        current.val = val;
+        return;
+      }
+      current = current.next;
+      startingIdx += 1;
+    }
+
+    throw new IndexError;
   }
 
   /** insertAt(idx, val): add node w/val before idx.
@@ -139,7 +176,27 @@ class LLStr {
 
   insertAt(idx: number, val: string): void {
 
-    this.length += 1;
+    if(this.length === 0) throw new IndexError;
+
+    let startingIdx = 0;
+    let current = this.head;
+
+    while (current !== null) {
+
+      if ((startingIdx+1) === idx) {
+
+        const newNode = new NodeStr(val);
+        newNode.next = current.next?.next!;
+        current.next = newNode;
+        this.length += 1;
+        return;
+      }
+      current = current.next;
+      startingIdx += 1;
+    }
+
+    throw new IndexError;
+
   }
 
   /** removeAt(idx): return & remove item at idx,
@@ -149,10 +206,27 @@ class LLStr {
 
   removeAt(idx: number): string {
 
+    if(this.length === 0) throw new IndexError;
 
+    let startingIdx = 0;
+    let current = this.head;
 
-    this.length -= 1;
-    return "x";
+    while (current !== null) {
+
+      if ((startingIdx+1) === idx) {
+
+        const soughtNode = current.next;
+
+        current.next = current.next?.next!;
+        this.length -= 1;
+
+        return soughtNode?.val!;
+      }
+      current = current.next;
+      startingIdx += 1;
+    }
+
+    throw new IndexError;
   }
 
   /** toArray (useful for tests!) */
