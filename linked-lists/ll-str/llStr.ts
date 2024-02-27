@@ -111,11 +111,18 @@ class LLStr {
 
     if(this.length === 0) throw new IndexError;
 
-    // let current = this.head;
-    const currFirstNode = this.head;
-    const newHeadNode = currFirstNode!.next;
-    this.head = newHeadNode;
-    newHeadNode!.next = currFirstNode;
+    //[a, b]
+    const currFirstNode = this.head; //cfn=a //b
+    const newHeadNode = currFirstNode!.next; //nhn = b //null
+    if(newHeadNode === null){
+      this.head = null;
+      this.tail = null;
+
+    }else{
+      this.head = newHeadNode; //head=b
+      newHeadNode!.next = currFirstNode!.next!.next;
+
+    }
 
     this.length -= 1;
     return currFirstNode!.val;
@@ -175,27 +182,38 @@ class LLStr {
    **/
 
   insertAt(idx: number, val: string): void {
+    //[a, 1, b]
 
-    if(this.length === 0) throw new IndexError;
-
-    let startingIdx = 0;
-    let current = this.head;
-
-    while (current !== null) {
-
-      if ((startingIdx+1) === idx) {
-
-        const newNode = new NodeStr(val);
-        newNode.next = current.next?.next!;
-        current.next = newNode;
-        this.length += 1;
-        return;
-      }
-      current = current.next;
-      startingIdx += 1;
+    if(idx > this.length || idx < 0){
+      throw new IndexError;
     }
 
-    throw new IndexError;
+    if(idx === 0){
+      this.unshift(val);
+    }else if(idx === this.length-1){
+      this.push(val);
+    }else{
+
+      let startingIdx = 0;
+      let current = this.head; //a //b
+
+      while (current !== null) {
+
+        if ((startingIdx+1) === idx) { //1
+
+          const newNode = new NodeStr(val);
+          newNode.next = current.next!; //newNode.next = b
+          current.next = newNode; //a -> 1
+          debugger;
+          // if(idx === this.length-1)
+          this.length += 1;
+
+        }
+        current = current.next;
+        startingIdx += 1;
+      }
+    }
+
 
   }
 
