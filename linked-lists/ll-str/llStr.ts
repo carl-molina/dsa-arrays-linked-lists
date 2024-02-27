@@ -125,6 +125,7 @@ class LLStr {
     }
 
     this.length -= 1;
+    console.log('This is shift currFirstNode!.val', currFirstNode!.val);
     return currFirstNode!.val;
   }
 
@@ -228,27 +229,48 @@ class LLStr {
 
   removeAt(idx: number): string {
 
+    console.log('Top of removeAt');
+
     if (this.length === 0) throw new IndexError;
-
-    let startingIdx = 0;
-    let current = this.head;
-
-    while (current !== null) {
-
-      if ((startingIdx + 1) === idx) {
-
-        const soughtNode = current.next;
-
-        current.next = current.next?.next!;
-        this.length -= 1;
-
-        return soughtNode?.val!;
-      }
-      current = current.next;
-      startingIdx += 1;
+    if (idx >= this.length || idx < 0) {
+      throw new IndexError;
     }
 
-    throw new IndexError;
+    if (idx === 0) {
+      return this.shift();
+    } else {
+      let startingIdx = 0;
+      let current = this.head;
+
+      while (current !== null) {
+
+        if (idx === 0) {
+          console.log('We got to index 0');
+          const soughtNode = current;
+
+          const newHead = current.next;
+          this.head = newHead;
+
+          console.log('soughtNode!.val:', soughtNode!.val);
+          return soughtNode!.val!;
+        }
+
+
+
+        if ((startingIdx + 1) === idx) {
+
+          const soughtNode = current.next;
+
+          current.next = current.next!.next!;
+          this.length -= 1;
+
+          return soughtNode!.val!;
+        }
+        current = current.next;
+        startingIdx += 1;
+      }
+    }
+
   }
 
   /** toArray (useful for tests!) */
